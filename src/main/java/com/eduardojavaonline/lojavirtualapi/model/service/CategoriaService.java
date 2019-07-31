@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.eduardojavaonline.lojavirtualapi.model.entity.Categoria;
 import com.eduardojavaonline.lojavirtualapi.model.repository.CategoriaRepository;
+import com.eduardojavaonline.lojavirtualapi.model.service.exception.ObjectNotFoundException;
+import com.eduardojavaonline.lojavirtualapi.util.Messages;
 
 @Service
 public class CategoriaService {
@@ -16,6 +18,7 @@ public class CategoriaService {
 	
 	public Categoria findById(Long id) {
 		Optional<Categoria> categoriaRetornada = categoriaRepository.findById(id);
-		return categoriaRetornada.orElse(null);
+		return categoriaRetornada.orElseThrow(
+				() -> new ObjectNotFoundException(Messages.MSG_OBJECT_NOT_FOUND.replace("?", "Categoria")));
 	}
 }

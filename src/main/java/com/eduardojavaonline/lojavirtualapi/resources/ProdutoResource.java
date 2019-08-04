@@ -7,20 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eduardojavaonline.lojavirtualapi.model.entity.Categoria;
-import com.eduardojavaonline.lojavirtualapi.model.service.CategoriaService;
+import com.eduardojavaonline.lojavirtualapi.model.entity.Produto;
+import com.eduardojavaonline.lojavirtualapi.model.service.ProdutoService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
-	
+@RequestMapping(value = "/produtos")
+public class ProdutoResource {
+
 	@Autowired
-	private CategoriaService categoriaService;
+	private ProdutoService produtoService;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
-		Categoria categoriaRetornada = categoriaService.findById(id);		
-		return ResponseEntity.ok().body(categoriaRetornada);
+	public ResponseEntity<Produto> findById(@PathVariable Long id) {
+		Produto produtoRetornado = produtoService.findById(id);
+		return ResponseEntity.ok().body(produtoRetornado);
 	}
-
 }

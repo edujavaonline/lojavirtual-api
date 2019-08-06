@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.eduardojavaonline.lojavirtualapi.model.entity.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tb_pagamento")
@@ -25,6 +26,7 @@ public abstract class Pagamento implements Serializable{
 	
 	private Integer estadoPagamento;
 	
+	@JsonBackReference
 	@OneToOne()
 	@JoinColumn(name = "id_pedido")
 	@MapsId

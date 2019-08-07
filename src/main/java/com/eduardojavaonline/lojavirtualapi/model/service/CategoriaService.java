@@ -1,5 +1,6 @@
 package com.eduardojavaonline.lojavirtualapi.model.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,11 @@ public class CategoriaService {
 			categoriaRepository.deleteById(id);
 		}catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityViolationException(Messages.MSG_DATA_INTEGRITY.replace("?", "categoria").replace("!", "produto"));
-		}
-		
+		}		
+	}
+	
+	public List<Categoria> findAll() {
+		List<Categoria> categorias = categoriaRepository.findAll();
+		return categorias;
 	}
 }

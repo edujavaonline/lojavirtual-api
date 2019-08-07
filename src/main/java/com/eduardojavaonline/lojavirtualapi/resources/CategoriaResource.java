@@ -1,6 +1,9 @@
 package com.eduardojavaonline.lojavirtualapi.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.eduardojavaonline.lojavirtualapi.model.dto.CategoriaDTO;
 import com.eduardojavaonline.lojavirtualapi.model.entity.Categoria;
 import com.eduardojavaonline.lojavirtualapi.model.service.CategoriaService;
 
@@ -46,6 +50,13 @@ public class CategoriaResource {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		categoriaService.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> categorias = categoriaService.findAll();
+		List<CategoriaDTO> categoriasDTO = categorias.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(categoriasDTO);
 	}
 
 }

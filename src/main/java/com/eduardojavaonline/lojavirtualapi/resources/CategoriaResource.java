@@ -1,11 +1,15 @@
 package com.eduardojavaonline.lojavirtualapi.resources;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.eduardojavaonline.lojavirtualapi.model.entity.Categoria;
 import com.eduardojavaonline.lojavirtualapi.model.service.CategoriaService;
@@ -21,6 +25,27 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
 		Categoria categoriaRetornada = categoriaService.findById(id);		
 		return ResponseEntity.ok().body(categoriaRetornada);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> save(@RequestBody Categoria categoria) {
+		Categoria categoriaRetornada = categoriaService.save(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(categoriaRetornada.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria categoria, @PathVariable Long id) {
+		categoria.setId(id);
+		categoria = categoriaService.update(categoria);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		categoriaService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

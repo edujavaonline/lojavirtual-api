@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.eduardojavaonline.lojavirtualapi.model.dto.CategoriaDTO;
 import com.eduardojavaonline.lojavirtualapi.model.entity.Categoria;
 import com.eduardojavaonline.lojavirtualapi.model.repository.CategoriaRepository;
 import com.eduardojavaonline.lojavirtualapi.model.service.exception.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoriaService {
 	public Page<Categoria> findAllByPage(Integer page, Integer linesByPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesByPage, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getDescricao());
 	}
 }
